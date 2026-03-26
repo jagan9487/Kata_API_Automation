@@ -25,20 +25,31 @@ public class CreateBookingSteps {
         this.context = context;
     }
 
-    @Given("user provides then following booking details")
+    @Given("user provides the following booking details")
     public void user_enters_booking_details(io.cucumber.datatable.DataTable table) {
         Map<String, String> data = table.asMaps().getFirst();
         booking = BookingDataMapper.mapToBooking(data);
         context.setBooking(booking);
     }
 
-    @When("user sends POST request to create a booking")
+    @Then("the booking should be created successfully")
+    public void validate_success_status_code() {
+        context.getResponse().then().statusCode(200);
+    }
+
+    @Then("the booking should not be created")
+    public void validate_invalid_request_status_code() {
+        context.getResponse().then().statusCode(400);
+    }
+
+
+    @When("the user submits the booking request")
     public void user_sends_post_request() {
         createBookingResponse = bookingAPI.createBooking(booking);
         context.setResponse(createBookingResponse);
     }
 
-    @Then("verify response data should match the input data for Createbooking api")
+    @Then("the user should receives the booking details successfully")
     public void validate_response_data() {
         BookingResponseValidator.validateCreateBookingResponse(createBookingResponse, booking);
     }

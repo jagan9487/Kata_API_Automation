@@ -24,14 +24,14 @@ public class CommonSteps {
         this.context = context;
     }
 
-    @Then("verify response code should be {int}")
-    public void validate_status_code(int statusCode) {
-        context.getResponse().then().statusCode(statusCode);
+    @Then("the system should deny request")
+    public void validate_invalid_request_status_code() {
+        context.getResponse().then().statusCode(400);
     }
 
-    @Then("verify response should match the {string} JSON schema")
-    public void validate_json_schema(String schemaName) {
-        SchemaValidator.validateSchema(context.getResponse(), schemaName);
+    @Then("the booking response should follow the expected structure")
+    public void validate_json_schema() {
+        SchemaValidator.validateSchema(context.getResponse(), "BookingSchema");
     }
 
     @Given("booking is created with the following details")
@@ -43,7 +43,7 @@ public class CommonSteps {
         context.setResponse(createBookingResponse);
     }
 
-    @Then("verify response should contain the error message {string}")
+    @Then("the user should get the error message {string}")
     public void validate_error_message(String expectedMessage) {
         List<String> errors = createBookingResponse.jsonPath().getList("errors");
         boolean isPresent= errors.stream().anyMatch(e -> e.contains(expectedMessage));
