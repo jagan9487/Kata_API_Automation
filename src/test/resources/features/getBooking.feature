@@ -5,18 +5,18 @@ Feature: Validate Get Booking API
       | firstName     | lastName     | depositPaid | email          | phone          | checkIn    | checkOut   | roomId |
       | Testfirstname | Testlastname | true        | jagan@test.com | +91-9843945628 | 2026-08-21 | 2026-08-22 | 43     |
 
-  Scenario: Get booking with valid id
-    Given user sends Get request to get the booking details
-    And verify response code should be 200
-    And verify response should match the "BookingSchema" JSON schema
-    Then verify response data should match the input data for Getbooking api
+  Scenario: Retrieve booking successfully with valid booking id
+    Given the user requests the booking details with valid data
+    And the booking details should be returned successfully
+    And the booking response should follow the expected structure
+    Then the booking information should match the stored data
 
-  Scenario: Get booking with invalid token
-    Given user sends Get request with Invalid token
-    And verify response code should be 401
-    Then verify response should contain the error message "Unauthorized"
+  Scenario: Booking retrieval should fail with invalid authentication
+    Given the user attempts to retrieve booking details with invalid authentication
+    And the system should deny request
+    Then the user should get the error message "Unauthorized"
 
-  Scenario: Get booking without token
+  Scenario: Booking retrieval should fail without authentication
     Given user sends Get request without token
-    And verify response code should be 401
-    Then verify response should contain the error message "Unauthorized"
+    And the system should deny request
+    Then the user should get the error message "Unauthorized"

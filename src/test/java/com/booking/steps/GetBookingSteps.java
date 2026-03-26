@@ -22,7 +22,7 @@ public class GetBookingSteps {
         this.context = context;
     }
 
-    @When("user sends Get request to get the booking details")
+    @When("the user requests the booking details with valid data")
     public void getBooking() {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
@@ -30,7 +30,12 @@ public class GetBookingSteps {
         response = bookingAPI.getBooking(bookingId, token);
     }
 
-    @When("user sends Get request with Invalid token")
+    @Then("the booking details should be returned successfully")
+    public void validate_status_code() {
+        context.getResponse().then().statusCode(200);
+    }
+
+    @When("the user attempts to retrieve booking details with invalid authentication")
     public void getBooking_Token() {
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
@@ -44,7 +49,7 @@ public class GetBookingSteps {
         response = bookingAPI.getBooking(bookingId, "");
     }
 
-    @Then("verify response data should match the input data for Getbooking api")
+    @Then("the booking information should match the stored data")
     public void validate_response_data() {
         BookingResponseValidator.validateGetBookingResponse(response, context.getBooking());
     }
