@@ -5,32 +5,32 @@ Feature: Validate Update Booking API
       | firstName     | lastName     | depositPaid | email          | phone          | checkIn    | checkOut   | roomId |
       | Testfirstname | Testlastname | true        | jagan@test.com | +91-9843945628 | 2026-08-21 | 2026-08-22 | 43     |
 
-  Scenario: Update booking with valid data
-    Given user provides then following booking details
+  Scenario: Update booking successfully with valid data
+    Given user provides the following booking details
       | firstName | lastName  | depositPaid | email          | phone          | checkIn    | checkOut   | roomId |
       | Testfname | Testlname | true        | jagan@test.com | +91-9843945628 | 2026-08-21 | 2026-08-22 | 54     |
-    And user sends Update request to modify the booking details
-    And verify response code should be 200
-    And verify response should match the "BookingSchema" JSON schema
-    Then verify response data should match the input data for Updatebooking api
+    And the user submits the update request
+    And the booking should be updated successfully
+    And the booking response should follow the expected structure
+    Then the user should receives the updated booking details successfully
 
-  Scenario: Update booking with invalid token
-    Given user sends Update request with Invalid token
-    And verify response code should be 401
-    Then verify response should contain the error message "Unauthorized"
+  Scenario: Booking update should fail with invalid authentication
+    Given the user attempts to update the booking with invalid authentication
+    And the system should deny request
+    Then the user should get the error message "Unauthorized"
 
-  Scenario: Update booking without token
+  Scenario: Booking update should fail without authentication
     Given user sends Update request without token
-    And verify response code should be 401
-    Then verify response should contain the error message "Unauthorized"
+    And the system should deny request
+    Then the user should get the error message "Unauthorized"
 
-  Scenario Outline: User should get expected error message when trying to update a booking using invalid data
-    Given user provides then following booking details
+  Scenario Outline: Booking update should fail with invalid or missing details
+    Given user provides the following booking details
       | firstName   | lastName   | depositPaid   | email   | phone   | checkIn   | checkOut   | roomId   |
       | <firstName> | <lastName> | <depositPaid> | <email> | <phone> | <checkIn> | <checkOut> | <roomId> |
-    And user sends Update request to modify the booking details
-    And verify response code should be 400
-    Then verify response should contain the error message "<errorMessage>"
+    And the user submits the update request
+    And the booking should not be updated
+    Then the user should get the error message "<errorMessage>"
 
     Examples:
       | firstName                 | lastName                  | depositPaid | email          | phone          | checkIn    | checkOut   | roomId | errorMessage                        |

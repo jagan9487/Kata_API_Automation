@@ -22,13 +22,18 @@ public class UpdateBookingSteps {
         this.context = context;
     }
 
-    @When("user sends Update request to modify the booking details")
+    @When("the user submits the update request")
     public void updateBooking() {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
         response = bookingAPI.updateBooking(bookingId,context.getBooking(),token);
         context.setResponse(response);
+    }
+
+    @Then("the booking should be updated successfully")
+    public void validate_status_code() {
+        context.getResponse().then().statusCode(200);
     }
 
     @When("user sends Update request without token")
@@ -39,7 +44,12 @@ public class UpdateBookingSteps {
         context.setResponse(response);
     }
 
-    @When("user sends Update request with Invalid token")
+    @Then("the booking should not be updated")
+    public void validate_invalid_request_status_code() {
+        context.getResponse().then().statusCode(400);
+    }
+
+    @When("the user attempts to update the booking with invalid authentication")
     public void updateBooking_invalidToken() {
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
@@ -47,7 +57,7 @@ public class UpdateBookingSteps {
         context.setResponse(response);
     }
 
-    @Then("verify response data should match the input data for Updatebooking api")
+    @Then("the user should receives the updated booking details successfully")
     public void validate_response_data() {
         BookingResponseValidator.validateUpdateBookingResponse(response, context.getBooking());
     }
