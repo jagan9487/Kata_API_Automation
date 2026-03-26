@@ -1,15 +1,15 @@
 package com.booking.steps;
 
-import api.BookingAPI;
-import dataMapper.BookingDataMapper;
+import com.booking.api.BookingAPI;
+import com.booking.dataMapper.BookingDataMapper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import models.Booking;
+import com.booking.models.Booking;
 import org.junit.Assert;
-import responseValidators.BookingResponseValidator;
-import utils.ContextUtility;
+import com.booking.responseValidators.BookingResponseValidator;
+import com.booking.utils.ContextUtility;
 
 import java.util.List;
 import java.util.Map;
