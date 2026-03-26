@@ -43,12 +43,5 @@ public class CreateBookingSteps {
         BookingResponseValidator.validateCreateBookingResponse(createBookingResponse, booking);
     }
 
-    @Then("verify response should contain the error message {string}")
-    public void validate_error_message(String expectedMessage) {
-        List<String> errors = createBookingResponse.jsonPath().getList("errors");
-        boolean isPresent= errors.stream().anyMatch(e -> e.contains(expectedMessage));
-        Assert.assertTrue("Expected error message not found", isPresent);
-
-    }
 
 }
