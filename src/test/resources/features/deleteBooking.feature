@@ -5,17 +5,17 @@ Feature: Validate Delete Booking API
       | firstName     | lastName     | depositPaid | email          | phone          | checkIn    | checkOut   | roomId |
       | Testfirstname | Testlastname | true        | jagan@test.com | +91-9843945628 | 2026-08-21 | 2026-08-22 | 43     |
 
-  Scenario: Delete booking with valid id
-    Given user sends Delete request to delete the booking details
-    And verify response code should be 201
-    Then verify the response message as "Booking deleted successfully"
+  Scenario: Booking should successfully deleted with valid booking id
+    Given the user requests to delete the booking
+    And the booking should be deleted successfully
+    Then the user should get message as "Booking deleted successfully"
 
-  Scenario: Delete booking with invalid token
-    Given user sends Delete request with Invalid token
-    And verify response code should be 401
-    Then verify response should contain the error message "Unauthorized"
+  Scenario: Booking deletion should fail with invalid authentication
+    Given the user attempts to delete the booking with invalid authentication
+    And the system should deny request
+    Then the user should get the error message "Unauthorized"
 
-  Scenario: Delete booking without token
-    Given user sends Delete request without token
-    And verify response code should be 401
-    Then verify response should contain the error message "Unauthorized"
+  Scenario: Booking deletion should fail without authentication
+    Given the user attempts to delete the booking without authentication
+    And the system should deny request
+    Then the user should get the error message "Unauthorized"

@@ -22,7 +22,7 @@ public class DeleteBookingSteps {
         this.context = context;
     }
 
-    @When("user sends Delete request to delete the booking details")
+    @When("the user requests to delete the booking")
     public void deleteBooking() {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
@@ -30,21 +30,26 @@ public class DeleteBookingSteps {
         response = bookingAPI.deleteBooking(bookingId, token);
     }
 
-    @When("user sends Delete request without token")
+    @When("the user attempts to delete the booking without authentication")
     public void deleteBooking_withoutToken() {
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
         response = bookingAPI.deleteBooking(bookingId, "");
     }
 
-    @When("user sends Delete request with Invalid token")
+    @Then("the booking should be deleted successfully")
+    public void validate_status_code() {
+        context.getResponse().then().statusCode(201);
+    }
+
+    @When("the user attempts to delete the booking with invalid authentication")
     public void deleteBooking_invalidToken() {
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
         response = bookingAPI.deleteBooking(bookingId, "-sad1213");
     }
 
-    @Then("verify the response message as {string}")
+    @Then("the user should get message as {string}")
     public void validateMessage(String message) {
         Assert.assertTrue(response.asString().contains(message));
     }
