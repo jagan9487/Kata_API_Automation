@@ -10,6 +10,11 @@ Feature: Validate Delete Booking API
     And the booking should be deleted successfully
     Then the user should get message as "Booking deleted successfully"
 
+  Scenario: Booking deletion should fail with Non-existent booking id
+    Given the user attempts to delete the booking with Non-existent booking id
+    And the system should reject the request
+    Then the user should get the error message "Non-existent booking id"
+
   Scenario: Booking deletion should fail with invalid authentication
     Given the user attempts to delete the booking with invalid authentication
     And the system should deny request

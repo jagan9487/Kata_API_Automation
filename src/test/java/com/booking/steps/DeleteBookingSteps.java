@@ -30,6 +30,11 @@ public class DeleteBookingSteps {
         response = bookingAPI.deleteBooking(bookingId, token);
     }
 
+    @When("the user attempts to delete the booking with Non-existent booking id")
+    public void deleteBooking_invalidId() {
+        response = bookingAPI.deleteBooking(-1313, token);
+    }
+
     @When("the user attempts to delete the booking without authentication")
     public void deleteBooking_withoutToken() {
         Response createResponse= context.getResponse();
