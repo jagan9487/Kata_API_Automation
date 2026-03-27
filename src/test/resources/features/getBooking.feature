@@ -11,6 +11,11 @@ Feature: Validate Get Booking API
     And the booking response should follow the expected structure
     Then the booking information should match the stored data
 
+  Scenario: Booking retrieval should fail with with Non-existent booking id
+    Given the user attempts to retrieve booking details with Non-existent booking id
+    And the system should reject the request
+    Then the user should get the error message "Non-existent booking id"
+
   Scenario: Booking retrieval should fail with invalid authentication
     Given the user attempts to retrieve booking details with invalid authentication
     And the system should deny request

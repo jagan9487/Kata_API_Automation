@@ -42,6 +42,11 @@ public class GetBookingSteps {
         response = bookingAPI.getBooking(bookingId, "-sad1213");
     }
 
+    @When("the user attempts to retrieve booking details with Non-existent booking id")
+    public void getBooking_invalidId() {
+        response = bookingAPI.getBooking(-1313, token);
+    }
+
     @When("user sends Get request without token")
     public void getBooking_withoutToken() {
         Response createResponse= context.getResponse();
