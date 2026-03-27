@@ -30,6 +30,14 @@ public class GetBookingSteps {
         response = bookingAPI.getBooking(bookingId, token);
     }
 
+    @When("the user requests the booking details")
+    public void getBookingDetails() {
+        token = authAPI.getToken();
+        Response createResponse= context.getResponse();
+        bookingId = createResponse.jsonPath().getInt("bookingid");
+        response = bookingAPI.getBooking(bookingId, token);
+    }
+
     @Then("the booking details should be returned successfully")
     public void validate_status_code() {
         context.getResponse().then().statusCode(200);
@@ -54,8 +62,14 @@ public class GetBookingSteps {
         response = bookingAPI.getBooking(bookingId, "");
     }
 
-    @Then("the booking information should match the stored data")
+    @Then("the booking details should match the created booking data")
     public void validate_response_data() {
         BookingResponseValidator.validateGetBookingResponse(response, context.getBooking());
     }
+
+    @Then("the booking details should match the updated booking data")
+    public void validate_updated_data() {
+        BookingResponseValidator.validateGetBookingResponse(response, context.getBooking());
+    }
+
 }
