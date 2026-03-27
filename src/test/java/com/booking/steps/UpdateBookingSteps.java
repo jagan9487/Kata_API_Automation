@@ -57,6 +57,12 @@ public class UpdateBookingSteps {
         context.setResponse(response);
     }
 
+    @When("the user attempts to update the booking with Non-existent booking id")
+    public void updateBooking_invalidId() {
+        response = bookingAPI.updateBooking(-121,context.getBooking(),token);
+        context.setResponse(response);
+    }
+
     @Then("the user should receives the updated booking details successfully")
     public void validate_response_data() {
         BookingResponseValidator.validateUpdateBookingResponse(response, context.getBooking());

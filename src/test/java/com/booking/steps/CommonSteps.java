@@ -29,6 +29,12 @@ public class CommonSteps {
         context.getResponse().then().statusCode(400);
     }
 
+    @Then("the system should reject the request")
+    public void validate_invalid_id_status_code() {
+        context.getResponse().then().statusCode(404);
+    }
+
+
     @Then("the booking response should follow the expected structure")
     public void validate_json_schema() {
         SchemaValidator.validateSchema(context.getResponse(), "BookingSchema");

@@ -14,6 +14,11 @@ Feature: Validate Update Booking API
     And the booking response should follow the expected structure
     Then the user should receives the updated booking details successfully
 
+  Scenario: Booking retrieval should fail with with Non-existent booking id
+    Given the user attempts to update the booking with Non-existent booking id
+    And the system should reject the request
+    Then the user should get the error message "Non-existent booking id"
+
   Scenario: Booking update should fail with invalid authentication
     Given the user attempts to update the booking with invalid authentication
     And the system should deny request
