@@ -27,7 +27,9 @@ public class GetBookingSteps {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
+        System.out.println("bookingId:"+bookingId);
         response = bookingAPI.getBooking(bookingId, token);
+        context.setResponse(response);
     }
 
     @When("the user requests the booking details")
@@ -35,7 +37,9 @@ public class GetBookingSteps {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
+        System.out.println("bookingId:"+bookingId);
         response = bookingAPI.getBooking(bookingId, token);
+        context.setResponse(response);
     }
 
     @Then("the booking details should be returned successfully")
@@ -46,30 +50,35 @@ public class GetBookingSteps {
     @When("the user attempts to retrieve booking details with invalid authentication")
     public void getBooking_Token() {
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.getBooking(bookingId, "-sad1213");
+        System.out.println(response.asPrettyString());
+        context.setResponse(response);
     }
 
     @When("the user attempts to retrieve booking details with Non-existent booking id")
     public void getBooking_invalidId() {
         response = bookingAPI.getBooking(-1313, token);
+        System.out.println(response.asPrettyString());
+        context.setResponse(response);
     }
 
-    @When("user sends Get request without token")
+    @When("the user attempts to retrieve booking details without token")
     public void getBooking_withoutToken() {
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.getBooking(bookingId, "");
+        context.setResponse(response);
     }
 
     @Then("the booking details should match the created booking data")
     public void validate_response_data() {
-        BookingResponseValidator.validateGetBookingResponse(response, context.getBooking());
+        BookingResponseValidator.validateGetBookingResponse(context.getResponse(),context.getBooking());
     }
 
     @Then("the booking details should match the updated booking data")
     public void validate_updated_data() {
-        BookingResponseValidator.validateGetBookingResponse(response, context.getBooking());
+        BookingResponseValidator.validateGetBookingResponse(context.getResponse(), context.getBooking());
     }
 
 }
