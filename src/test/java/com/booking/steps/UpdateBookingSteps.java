@@ -26,7 +26,7 @@ public class UpdateBookingSteps {
     public void updateBooking() {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.updateBooking(bookingId,context.getBooking(),token);
         context.setResponse(response);
     }
@@ -39,9 +39,17 @@ public class UpdateBookingSteps {
     @When("user sends Update request without token")
     public void updateBooking_withoutToken() {
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.updateBooking(bookingId,context.getBooking()," ");
         context.setResponse(response);
+    }
+
+    @When("the user attempts to update the request")
+    public void update_Booking() {
+        token = authAPI.getToken();
+        Response createResponse= context.getResponse();
+        bookingId = createResponse.jsonPath().get("bookingid");
+        response = bookingAPI.updateBooking(bookingId,context.getBooking(),token);
     }
 
     @Then("the booking should not be updated")
@@ -52,14 +60,16 @@ public class UpdateBookingSteps {
     @When("the user attempts to update the booking with invalid authentication")
     public void updateBooking_invalidToken() {
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.updateBooking(bookingId,context.getBooking(),"-hh7y32");
+        System.out.println(response.asPrettyString());
         context.setResponse(response);
     }
 
     @When("the user attempts to update the booking with Non-existent booking id")
     public void updateBooking_invalidId() {
         response = bookingAPI.updateBooking(-121,context.getBooking(),token);
+        System.out.println(response.asPrettyString());
         context.setResponse(response);
     }
 
