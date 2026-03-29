@@ -27,14 +27,15 @@ public class CreateBookingSteps {
 
     @Given("user provides the following booking details")
     public void user_enters_booking_details(io.cucumber.datatable.DataTable table) {
-        Map<String, String> data = table.asMaps().getFirst();
+        Map<String, String> data = table.asMaps().get(0);
         booking = BookingDataMapper.mapToBooking(data);
+        booking.setRoomid(CommonSteps.newRoomId());
         context.setBooking(booking);
     }
 
     @Then("the booking should be created successfully")
     public void validate_success_status_code() {
-        context.getResponse().then().statusCode(200);
+        context.getResponse().then().statusCode(201);
     }
 
     @Then("the booking should not be created")
@@ -46,6 +47,7 @@ public class CreateBookingSteps {
     @When("the user submits the booking request")
     public void user_sends_post_request() {
         createBookingResponse = bookingAPI.createBooking(booking);
+        System.out.println(createBookingResponse.asPrettyString());
         context.setResponse(createBookingResponse);
     }
 
@@ -53,6 +55,8 @@ public class CreateBookingSteps {
     public void validate_response_data() {
         BookingResponseValidator.validateCreateBookingResponse(createBookingResponse, booking);
     }
+
+
 
 
 }
