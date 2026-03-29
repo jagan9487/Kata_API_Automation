@@ -1,0 +1,28 @@
+Create API
+--------------------
+Scenario 2: the lastname is accepting more than 18 characters and error message is "size should be between 3 and 30" instead of "size should be between 3 and 18"
+Scenario 2: response status code is 409 instead of 400 when checkout date is less than checkin date
+
+Get API
+--------------------
+Scenario 3&4: Getting 403 status code instead of 401 when trying to delete a booking without providing authentication token and also invalid token
+Scenario 3&4: Getting error message as "Failed to fetch booking: 403" instead of "Unauthorized" when trying to delete a booking without providing authentication token and also invalid token
+
+Update API
+--------------------
+Scenario 1: Getting response as status:true instead of the response which has been mentioned in swagger documentation
+Scenario 3&4: Getting 403 status code instead of 401 when trying to delete a booking without providing authentication token and also invalid token
+Scenario 3&4: Getting error message as "Failed to fetch booking: 403" booking instead of "Unauthorized" when trying to delete a booking without providing authentication token and also invalid token
+Scenario 5: the lastname is accepting more than 18 characters and error message is "size should be between 3 and 30" instead of "size should be between 3 and 18"
+Scenario 5: response status code is 409 instead of 400 when checkout date is less than checkin date
+
+Delete API
+--------------------
+1.Getting 200 status code instead of 201 for successful deletion
+2.Getting 500 status code instead of 404 when trying to delete a non-existing booking id
+3.Getting 403 status code instead of 401 when trying to delete a booking without providing authentication token and also invalid token
+4.Getting error message as "Failed to fetch booking: 403" booking instead of "Unauthorized" when trying to delete a booking without providing authentication token and also invalid token
+
+booking-crud-operations
+--------------------
+Scenario 2: As the update response has only status:true, the booking id is not being returned in the response which is required for further operations like get. So, we are not able to perform get operations on the updated booking id.
