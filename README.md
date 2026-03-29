@@ -1,67 +1,100 @@
-# Kata API Testing in Java
+# Kata: Booking API Automation Framework in Java
 
-API Testing and Java Exercise: Setting up a Basic API Test Automation Framework.
+A BDD-based API test automation framework developed using Java, Rest Assured, and Cucumber.
+It validates core booking APIs such as create booking, retrieve booking, update booking, and delete booking.
 
-## Objective
-The objective of this exercise is to evaluate your knowledge on API testing and Java by setting up a basic API Test Automation framework using Rest-Assured and Cucumber. You will need to create a test suite that executes a few tests against one endpoint of a hotel booking website and evaluates their responses.
+## 1. Overview
 
-## Background
-The application under test is a simple hotel booking website where you can book a room and also send a form with a request.
+This framework is built using a Behavior-Driven Development (BDD) approach, where test scenarios are written in plain English using Cucumber. This enables both technical and non-technical stakeholders to understand, contribute to, and validate API behavior.
 
-The website can be accessed at https://automationintesting.online/.
+### API Reference
 
-The Swagger documentation for the two endpoints you will be testing can be found at:
+**Base URL:** https://automationintesting.online/
 
-Booking endpoint: https://automationintesting.online/booking/swagger-ui/index.html  
-Optionally, you also have the Authentican endpoint: https://automationintesting.online/auth/swagger-ui/index.html
-
-### Swagger
-This website is an external application which is not in our control.  
-We noticed that the Swagger documentation is sometimes not available on the mentioned URL above.  
-As a backup, you can find the Swagger documentation in this repository at [src/test/resources/spec/booking.yaml](src/test/resources/spec/booking.yaml)
-
-The Open API Spec file is only supported in the Ultimate version of IntelliJ IDEA. But you can copy the content of the file and paste it in an online Swagger editor like https://editor.swagger.io/ to visualize the API documentation.
-
-### Authentication
-In order to authenticate yourself, the required credentials are:
-* Username: `admin`
-* Password: `password`
-
-## Task
-You are provided with an extremely basic API test project.
-
-Please clone the project and create a new branch with your name. At the end, please push your branch to this project.
-
-The project to start from, can be found here: https://github.com/freddyschoeters/API_Testing_kata
-
-Your task is to set up an API Test Automation framework from this project using Java, Rest-Assured, and Cucumber (feel free to add more dependencies if required).
-
-It is up to you to define the test cases. You don’t need to have a full coverage, but you need to show enough variation on the types of tests that you would need to write and execute, and what to check in the response.
-
-This kata has the purpose to evaluate both your technical skills as well as your testing skills.
-
-`For this task, you will use the booking endpoint.`
+**Booking Endpoints:**
+- **Create Booking** — `POST /booking`
+- **Get Booking by ID** — `GET /booking/{id}`
+- **Update Booking** — `PUT /booking/{id}`
+- **Delete Booking** — `DELETE /booking/{id}`
 
 
-## Requirements
-* Use Java as the programming language
-* Use Rest-Assured as the API testing library
-* Use Cucumber as the BDD framework
-* Design your codebase using a proper Java design pattern
-* Write good tests with correct checks
-* Use Git for version control and push your codebase to an open GitHub repository
-* Make regular commits to demonstrate your progress
+## 2. Technologies Used
 
+- Java 21
+- Maven 4.0.0
+- Rest Assured 5.5.2
+- JSON Schema Validator 5.4.0
+- Cucumber 7.22.2
+- JUnit Jupiter 5.12.2
+- JUnit Platform Suite 1.12.2
+- Lombok 1.18.30
 
-## Deliverables
-* Your branch pushed in the provided project.
-* A comprehensive test suite covering the scenarios mentioned above
-* A well-structured codebase with proper design patterns and comments
-* Regular commits demonstrating your progress
+## 3. Setup Guide
 
-## Evaluation Criteria
-* Being able to successfully run the tests
-* Correctness and completeness of the test suite
-* Quality of the codebase (design patterns, structure, code quality, …)
-* Use of Rest-Assured and Cucumber features
-* Commit history and progress demonstration
+### Prerequisites
+- Java 21
+- Maven 4.0.0 or above
+- Git
+
+### Verify Installation
+Ensure Java and Maven are correctly installed:
+    java -version
+    mvn -version
+
+### Clone Repository
+git clone <repository-url>
+cd <project-folder>
+
+### Open in IDE
+- Open the project in IntelliJ IDEA / Eclipse
+- Import it as a Maven project (if not auto-detected)
+- Wait for dependencies to download
+
+### Notes
+- Reload the Maven project if dependencies are not resolved
+- Ensure the correct Java version is configured in your IDE
+
+## 4. Run configuration
+
+### 1. Using TestRunner class
+- Open `TestRunner.java`
+- Provide the required tag in the `@CucumberOptions` annotation
+- Run the TestRunner class
+
+**Available Tags:**
+- `@CreateBooking` — Create booking scenarios
+- `@GetBooking` — Retrieve booking scenarios
+- `@UpdateBooking` — Update booking scenarios
+- `@DeleteBooking` — Delete booking scenarios
+- `@Booking_CRUD_Operations` — End-to-end CRUD scenarios
+
+![img_1.png](img_1.png)
+
+### 2. Feature Files
+- Open the desired feature file
+- Click the green run icon next to a scenario or feature
+
+![img.png](img.png)
+
+### 3. Maven command line
+    - Open terminal and navigate to the project root directory
+    - Run the following command to execute all tests with a specific tag:
+      mvn test -Dcucumber.filter.tags="@TagName"
+
+## 5. Reporting
+
+After execution, the Cucumber HTML report is available at: 
+target/cucumber-reports.html
+
+## 6. Test scenarios
+
+- Create booking feature file contains both positive and negative scenarios for create booking endpoint.
+- Get booking feature file contains both positive and negative scenarios for get booking endpoint.
+- Update booking feature file contains both positive and negative scenarios for update booking endpoint.
+- Delete booking feature file contains both positive and negative scenarios for delete booking endpoint.
+- Booking CRUD operations feature file contains scenarios which cover all CRUD operations
+
+## 7. Open Issues
+
+Known issues and observations are documented under:
+/src/resources
