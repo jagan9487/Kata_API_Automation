@@ -28,18 +28,29 @@ public class DeleteBookingSteps {
         Response createResponse= context.getResponse();
         bookingId = createResponse.jsonPath().getInt("bookingid");
         response = bookingAPI.deleteBooking(bookingId, token);
+        context.setResponse(response);
+    }
+
+    @When("the user attempts to delete the booking")
+    public void delete_booking() {
+        token = authAPI.getToken();
+        Response createResponse= context.getResponse();
+        bookingId = createResponse.jsonPath().getInt("bookingid");
+        response = bookingAPI.deleteBooking(bookingId, token);
     }
 
     @When("the user attempts to delete the booking with Non-existent booking id")
     public void deleteBooking_invalidId() {
         response = bookingAPI.deleteBooking(-1313, token);
+        context.setResponse(response);
     }
 
     @When("the user attempts to delete the booking without authentication")
     public void deleteBooking_withoutToken() {
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.deleteBooking(bookingId, "");
+        context.setResponse(response);
     }
 
     @Then("the booking should be deleted successfully")
@@ -50,12 +61,14 @@ public class DeleteBookingSteps {
     @When("the user attempts to delete the booking with invalid authentication")
     public void deleteBooking_invalidToken() {
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().getInt("bookingid");
+        bookingId = createResponse.jsonPath().get("bookingid");
         response = bookingAPI.deleteBooking(bookingId, "-sad1213");
+        context.setResponse(response);
     }
 
-    @Then("the user should get message as {string}")
-    public void validateMessage(String message) {
-        Assert.assertTrue(response.asString().contains(message));
+    @Then("the user should get success message")
+    public void validateMessage() {
+        Boolean success = response.jsonPath().getBoolean("success");
+        Assert.assertTrue("Expected success to be true", success);
     }
 }
