@@ -19,7 +19,7 @@ Feature: Validate Booking CRUD Operations
     And the user requests the booking details
     Then the booking details should match the updated booking data
 
-  Scenario: Verify booking deletion and validation3
+  Scenario: Verify booking deletion and validation
     Given the user attempts to delete the booking
     And the user requests the booking details
     Then the system should reject the request

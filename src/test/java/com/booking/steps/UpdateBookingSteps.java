@@ -26,7 +26,7 @@ public class UpdateBookingSteps {
     public void updateBooking() {
         token = authAPI.getToken();
         Response createResponse= context.getResponse();
-        bookingId = createResponse.jsonPath().get("bookingid");
+        bookingId = createResponse.jsonPath().getInt("bookingid");
         response = bookingAPI.updateBooking(bookingId,context.getBooking(),token);
         context.setResponse(response);
     }

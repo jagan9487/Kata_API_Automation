@@ -18,10 +18,10 @@ Scenario 5: response status code is 409 instead of 400 when checkout date is les
 
 Delete API
 --------------------
-1.Getting 200 status code instead of 201 for successful deletion
-2.Getting 500 status code instead of 404 when trying to delete a non-existing booking id
-3.Getting 403 status code instead of 401 when trying to delete a booking without providing authentication token and also invalid token
-4.Getting error message as "Failed to fetch booking: 403" booking instead of "Unauthorized" when trying to delete a booking without providing authentication token and also invalid token
+Scenario 1: Getting 200 status code instead of 201 for successful deletion
+Scenario 2: Getting 500 status code instead of 404 when trying to delete a non-existing booking id
+Scenario 3: Getting 403 status code instead of 401 when trying to delete a booking without providing authentication token and also invalid token
+Scenario 4: Getting error message as "Failed to fetch booking: 403" booking instead of "Unauthorized" when trying to delete a booking without providing authentication token and also invalid token
 
 booking-crud-operations
 --------------------
